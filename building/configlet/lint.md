@@ -104,7 +104,7 @@ The `config.json` file should have the following checks:
 - The `"exercises.concept[].name"` key is required
 - The `"exercises.concept[].name"` value must be a Title Case string³ with length <= 255
 - The `"exercises.concept[].uuid"` key is required
-- The `"exercises.concept[].uuid"` value must be a unique, lowercased v4 UUID string
+- The `"exercises.concept[].uuid"` value must be a unique version 4 UUID string⁵
 - The `"exercises.concept[].deprecated"` key is optional
 - The `"exercises.concept[].deprecated"` value must be a boolean value
 - The `"exercises.concept[].deprecated"` value must generate a warning if set to `false`
@@ -135,7 +135,7 @@ The `config.json` file should have the following checks:
 - The `"exercises.practice[].name"` key is required
 - The `"exercises.practice[].name"` value must be a Title Case string³ with length <= 255
 - The `"exercises.practice[].uuid"` key is required
-- The `"exercises.practice[].uuid"` value must be a unique, lowercased v4 UUID string
+- The `"exercises.practice[].uuid"` value must be a unique version 4 UUID string⁵
 - The `"exercises.practice[].deprecated"` key is optional
 - The `"exercises.practice[].deprecated"` value must be a boolean value
 - The `"exercises.practice[].deprecated"` value must generate a warning if set to `false`
@@ -168,7 +168,7 @@ The `config.json` file should have the following checks:
 - The `"concepts"` value must be an array
 - The `"concepts"` value must have a entry with a matching `"slug"` property for each concept listed in a concept exercise's `"concepts"` property
 - The `"concepts[].uuid"` key is required
-- The `"concepts[].uuid"` value must be a unique, lowercased v4 UUID string
+- The `"concepts[].uuid"` value must be a unique version 4 UUID string⁵
 - The `"concepts[].slug"` key is required
 - The `"concepts[].slug"` value must be a kebab-case string² with length <= 255
 - The `"concepts[].name"` key is required
@@ -358,3 +358,12 @@ The `config.json` file should have the following checks:
 - `%{snake_slug}`: the `snake_case` exercise slug (e.g. `bit_manipulation`)
 - `%{camel_slug}`: the `camelCase` exercise slug (e.g. `bitManipulation`)
 - `%{pascal_slug}`: the `PascalCase` exercise slug (e.g. `BitManipulation`)
+5. Unique version 4 UUID string: A string that satisfies all of these conditions:
+   - It only exists once in the track-level `config.json` file of a given Exercism track
+   - It does not exist in the track-level `config.json` file of any other Exercism track
+   - It does not exist in any `canonical-data.json` file in https://github.com/exercism/problem-specifications
+   - It matches the regular expression:
+   ```
+   ^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+   ```
+   You can run `configlet uuid` to generate a suitable UUID.
